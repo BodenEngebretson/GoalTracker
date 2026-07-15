@@ -33,7 +33,7 @@ def read_d():
 
 
 if __name__ == '__main__':
-    add_entry("Goals", 6, "Think I fixed it", 0.35)
+    add_entry("Goals", 7, "Create Git Repo", 1.00)
     read_d()
 
     
