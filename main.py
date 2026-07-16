@@ -13,19 +13,47 @@ def read(filename):
     except FileNotFoundError:
         raise {}
 
-def add_entry(Id: int, goal: str):
+def add_entry(goal: str):
     data = read(db_file)
+    try:
+        data.append(goal)
+    finally:
 
-    data.append(goal)
-
-    write(db_file, data)
+        write(db_file, data)
 
 def del_entry( Id: int):
     data = read(db_file)
+    
+    try:
+        data.pop(Id)
+    finally:
+        write(db_file)
 
-    data.pop(Id)
+def print_goals():
+    data = read(db_file)
+    print(data)
 
-    write(db_file)
+def root():
+    print("Welcome to my Goal Tracker Application!")
+    answer = int(input("Would you like to: \n1) Display Goals\n2) Add new Goal \n3) Delete Goal\n-->"))
+    
+    if answer == 1:
+        print_goals()
+    elif answer == 2:
+        print("What goal would you like to add?")
+        goal = str(input("-->"))
+        add_entry(goal)
+    elif answer == 3:
+        print("What is the Id of the Goal you want to delete?")
+        x = input("-->")
+        try:
+            del_entry(int(x))
+            print("Success")
+        except:
+            print("Something Went Wrong")
+
+
+
 
 if __name__ == '__main__':
-    add_entry(7, "Hating")
+    root()
