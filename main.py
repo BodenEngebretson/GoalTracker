@@ -2,38 +2,30 @@ import json
 
 db_file = 'goals.json'
 
-def open_d():
-    with open(db_file, 'r') as f:
-        data = json.load(f)
-
-    return data
-
-def add_entry(category, Id: int, goal: str, progress: float):
-    new = {"Id": Id, "Goal": goal, "Progress": progress}
-
-    with open(db_file, 'r') as f:
-        data = json.load(f)
-        
-    data["Goals"].append(new)
-    
-    if category not in data:
-        data[category] = []
-
+def write(filename, data):
     with open(db_file, 'w') as f:
         json.dump(data, f, indent=2)
-    
 
+def read(filename):
+    try:
+        with open(db_file, 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        raise {}
 
-def read_d():
-    with open(db_file, 'r') as f:
-        data = json.load(f)
+def add_entry(Id: int, goal: str):
+    data = read(db_file)
 
-        for goal in data["Goals"]:
-            print(goal['Id'], '-', goal["Goal"], '-', goal['Progress'])    
+    data.append(goal)
 
+    write(db_file, data)
+
+def del_entry( Id: int):
+    data = read(db_file)
+
+    data.pop(Id)
+
+    write(db_file)
 
 if __name__ == '__main__':
-    add_entry("Goals", 7, "Create Git Repo", 1.00)
-    read_d()
-
-    
+    add_entry(7, "Hating")
