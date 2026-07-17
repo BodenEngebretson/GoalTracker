@@ -21,13 +21,15 @@ def add_entry(goal: str):
 
         write(db_file, data)
 
-def del_entry( Id: int):
+def del_entry(Id: int):
     data = read(db_file)
     
     try:
-        data.pop(Id)
-    finally:
-        write(db_file)
+        del data[Id]
+    except:
+        print("Index out of Range")
+
+    write(db_file, data)
 
 def print_goals():
     data = read(db_file)
@@ -46,14 +48,14 @@ def root():
     elif answer == 3:
         print("What is the Id of the Goal you want to delete?")
         x = input("-->")
+        x = int(x)
+        
         try:
-            del_entry(int(x))
-            print("Success")
+            del_entry(x)
+        except IndexOutOfRange:
+            print("Id not in List")
         except:
             print("Something Went Wrong")
-
-
-
 
 if __name__ == '__main__':
     root()
