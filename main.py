@@ -33,29 +33,38 @@ def del_entry(Id: int):
 
 def print_goals():
     data = read(db_file)
-    print(data)
+    for i, goal in enumerate(data):
+        print(i, goal, "\n")
 
 def root():
+
+    game = True
+
     print("Welcome to my Goal Tracker Application!")
-    answer = int(input("Would you like to: \n1) Display Goals\n2) Add new Goal \n3) Delete Goal\n-->"))
-    
-    if answer == 1:
-        print_goals()
-    elif answer == 2:
-        print("What goal would you like to add?")
-        goal = str(input("-->"))
-        add_entry(goal)
-    elif answer == 3:
-        print("What is the Id of the Goal you want to delete?")
-        x = input("-->")
-        x = int(x)
+
+    while game:
+        answer = int(input("Would you like to: \n1) Display Goals \n2) Add new Goal \n3) Delete Goal \n0) Quit \n--> "))
+        print()
         
-        try:
-            del_entry(x)
-        except IndexOutOfRange:
-            print("Id not in List")
-        except:
-            print("Something Went Wrong")
+        if answer == 1:
+            print_goals()
+        elif answer == 2:
+            print("What goal would you like to add?")
+            goal = str(input("--> "))
+            add_entry(goal)
+        elif answer == 3:
+            print("What is the Id of the Goal you want to delete?")
+            x = input("--> ")
+            x = int(x)
+   
+            try:
+                del_entry(x)
+            except IndexOutOfRange:
+                print("Id not in List")
+            except:
+                print("Something Went Wrong")
+        else:
+            game = False
 
 if __name__ == '__main__':
     root()
